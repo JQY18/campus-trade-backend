@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="renko.jiang.campus_trade.mapper.CommentMapper">
+
+    <resultMap id="CommentResultMap" type="renko.jiang.campus_trade.pojo.vo.CommentVO">
+        <id property="id" column="id"/>
+        <result property="postId" column="post_id"/>
+        <result property="commenterId" column="commenter_id"/>
+        <result property="commenterNickname" column="commenter_nickname"/>
+        <result property="commenterAvatar" column="commenter_avatar"/>
+        <result property="createTime" column="create_time"/>
+        <result property="like" column="like"/>
+        <result property="content" column="content"/>
+        <result property="isLiked" column="is_liked"/>
+
+        <collection property="reply" ofType="renko.jiang.campus_trade.pojo.vo.Reply">
+            <id property="id" column="reply_id"/>
+            <result property="fatherId" column="father_id"/>
+            <result property="commenterId" column="reply_commenter_id"/>
+            <result property="commenterNickname" column="reply_commenter_nickname"/>
+            <result property="commenterAvatar" column="reply_commenter_avatar"/>
+            <result property="content" column="reply_content"/>
+            <result property="replierId" column="replier_id"/>
+            <result property="replierNickname" column="replier_nickname"/>
+            <result property="replierAvatar" column="replier_avatar"/>
+            <result property="createTime" column="reply_create_time"/>
+        </collection>
+    </resultMap>
+    <select id="getCommentsByPostId" resultMap="CommentResultMap">
+        select c.id,
+               c.post_id,
+               c.commenter_id,
+               c.content,
+               c.create_time,
+               c.like,
+               (select if(count(liker_id) = 0, false, true)
+                from likes l
+                where l.comment_id = c.id and l.liker_id = #{userId}) as is_liked,
+               (select nickname from user where id = c.commenter_id) as commenter_nickname,
+               (select avatar from user where id = c.commenter_id)   as commenter_avatar,
+               r.id                                                  as reply_id,
+               r.father_id,
+               r.commenter_id                                        as reply_commenter_id,
+               (select nickname from user where id = r.commenter_id) as reply_commenter_nickname,
+               (select avatar from user where id = r.commenter_id)   as reply_commenter_avatar,
+               r.content                                             as reply_content,
+               r.create_time                                         as reply_create_time,
+               r.replier_id                                          as replier_id,
+               (select nickname from user where id = r.replier_id)   as replier_nickname,
+               (select avatar from user where id = r.replier_id)     as replier_avatar
+        from comment c
+                 left join reply r on c.id = r.father_id
+        where c.post_id = #{postId}
+        order by c.like desc, c.create_time desc, r.create_time desc;
+    </select>
+
+
+</mapper>

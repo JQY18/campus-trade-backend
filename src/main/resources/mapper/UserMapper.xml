@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="renko.jiang.campus_trade.mapper.UserMapper">
+    <!--    修改用户信息   -->
+    <update id="updateUser">
+        update user
+        <set>
+            <if test="nickname != null and nickname != ''">nickname = #{nickname},</if>
+            <if test="gender != null and gender != ''">gender = #{gender},</if>
+            <if test="school != null and school != ''">school = #{school},</if>
+            <if test="phoneNumber != null and phoneNumber != ''">phone_number = #{phoneNumber},</if>
+            <if test="email != null and email != ''">email = #{email},</if>
+            <if test="updateTime != null">update_time = #{updateTime}</if>
+        </set>
+        where id = #{userId};
+    </update>
+
+</mapper>

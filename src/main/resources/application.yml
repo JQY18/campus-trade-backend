@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: campus_trade
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
+    url: jdbc:mysql://localhost:3306/campus_trade?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+  servlet:
+    multipart:
+      max-file-size: 2MB
+#  data:
+#    redis:
+#      host: localhost
+#      port: 6379
+#      password: 1234
+#      database: 0
+
+server:
+  port: 8080
+
+
+mybatis:
+  #mapper映射文件路径
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: renko.jiang.entity
+  configuration:
+    #驼峰命名自动映射
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+trade:
+  jwt:
+    # 设置jwt签名加密时使用的秘钥
+    user-secret-key: renko
+    # 设置jwt过期时间
+    user-ttl: 7200000
+    # 设置前端传递过来的令牌名称
+    user-token-name: token
+
+upload:
+  path: D:\\image
