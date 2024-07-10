@@ -1,16 +1,15 @@
-package renko.jiang.campus_trade.pojo.vo;
+package renko.jiang.campus_trade.pojo.dto;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Data
-public class PostVO {
-    private Integer id;
+public class PostDTO {
     private Integer userId;
     private Integer category;
     private String title;
     private String content;
-    private List<String> images;
-    private String createTime;
+    private List<MultipartFile> images;
 }

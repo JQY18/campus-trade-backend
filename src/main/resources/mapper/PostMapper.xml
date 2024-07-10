@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="renko.jiang.campus_trade.mapper.PostMapper">
+    <resultMap id="PostResultMap" type="renko.jiang.campus_trade.pojo.vo.PostVO">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="category" column="category"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="createTime" column="create_time"/>
+
+        <collection property="images" javaType="java.util.List" ofType="java.lang.String" column="id"
+                    select="renko.jiang.campus_trade.mapper.PostMapper.getImagesByPostId">
+        </collection>
+
+    </resultMap>
+    <insert id="addImages">
+        insert into images(post_id,url) values
+        <foreach collection="images" item="item" separator=",">
+            (#{postId},#{item})
+        </foreach>
+    </insert>
+
+
+    <select id="getById" resultMap="PostResultMap" resultType="renko.jiang.campus_trade.pojo.vo.PostVO">
+        select p.id,
+               p.user_id,
+               p.title,
+               p.content,
+               p.create_time
+        from post p
+        where p.id = #{id}
+    </select>
+
+
+    <!--  搜索帖子  -->
+    <select id="getAllPosts" resultMap="PostResultMap" resultType="renko.jiang.campus_trade.pojo.vo.PostVO">
+        select id,
+               user_id,
+               category,
+               title,
+               content,
+               create_time
+        from post
+        order by create_time desc
+    </select>
+
+    <!--  搜索帖子(new)  -->
+    <select id="searchPost" resultMap="PostResultMap" resultType="renko.jiang.campus_trade.pojo.vo.PostVO">
+        select id,
+        user_id,
+        category,
+        title,
+        content,
+        create_time
+        from post
+        <where>
+            <if test="category != null and category != 0">
+                and category = #{category}
+            </if>
+            <if test="title != null and title != '' and content != null and content != ''">
+                and (title like concat('%', #{title}, '%') or content like concat('%', #{content}, '%'))
+            </if>
+
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+</mapper>

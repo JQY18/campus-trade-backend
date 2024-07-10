@@ -1,16 +1,14 @@
-package renko.jiang.campus_trade.pojo.vo;
+package renko.jiang.campus_trade.pojo.entity;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class PostVO {
+public class Post {
     private Integer id;
     private Integer userId;
     private Integer category;
     private String title;
     private String content;
-    private List<String> images;
     private String createTime;
+    private String updateTime;
 }

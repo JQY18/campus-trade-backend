@@ -3,9 +3,11 @@ package renko.jiang.campus_trade.controller.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import renko.jiang.campus_trade.pojo.dto.LoginDTO;
 import renko.jiang.campus_trade.pojo.entity.User;
 import renko.jiang.campus_trade.pojo.result.Result;
+import renko.jiang.campus_trade.pojo.vo.UserInfoVO;
 import renko.jiang.campus_trade.pojo.vo.UserLoginVO;
 import renko.jiang.campus_trade.properties.JwtProperties;
 import renko.jiang.campus_trade.service.UserService;
@@ -23,6 +25,11 @@ public class UserController {
     @Autowired
     private JwtProperties jwtProperties;
 
+    /**
+     * 登录
+     * @param loginDTO
+     * @return
+     */
     @PostMapping(value = "/login")
     public Result login(@RequestBody LoginDTO loginDTO) {
 
@@ -50,6 +57,11 @@ public class UserController {
         return Result.success(userLoginVO);
     }
 
+    /**
+     * 注册
+     * @param loginDTO
+     * @return
+     */
     @PostMapping("/register")
     public Result register(@RequestBody LoginDTO loginDTO){
         User user = userService.login(loginDTO);
@@ -60,4 +72,46 @@ public class UserController {
         return Result.success();
     }
 
+    /**
+     * 获取用户信息
+     * @param postUserId
+     * @return
+     */
+    @GetMapping("/info")
+    public Result<UserInfoVO> getUserInfoById(Integer postUserId){
+        UserInfoVO userInfo = userService.getUserInfoById(postUserId);
+        return Result.success(userInfo);
+    }
+    /**
+     * 更新用户信息
+     * @param userInfoVO
+     * @return
+     */
+    @PostMapping("/update")
+    public Result updateUserInfo(@RequestBody UserInfoVO userInfoVO){
+        userService.updateUserInfo(userInfoVO);
+        return Result.success();
+    }
+
+    /**
+     * 修改用户头像
+     * @param id 用户id
+     * @param avatar
+     */
+    @PostMapping("/avatar")
+    public Result updateAvatar(Integer id, MultipartFile avatar){
+        userService.updateAvatar(id, avatar);
+        return Result.success();
+    }
+
+    /**
+     * 修改密码
+     * @param params
+     *
+     */
+    @PostMapping("/password")
+    public Result updatePassword(@RequestBody Map<String, Object> params){
+        userService.updatePassword((Integer)params.get("id"), (String)params.get("currentPassword"), (String) params.get("newPassword"));
+        return Result.success();
+    }
 }

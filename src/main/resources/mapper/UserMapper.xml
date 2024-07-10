@@ -16,4 +16,15 @@
         where id = #{userId};
     </update>
 
+    <!--     修改用户信息  -->
+    <update id="updateUserInfo">
+        update user
+        <set>
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="nickname != null and nickname != ''">nickname = #{nickname},</if>
+            <if test="school != null and school != ''">school = #{school},</if>
+        </set>
+        where id = #{id};
+    </update>
+
 </mapper>
