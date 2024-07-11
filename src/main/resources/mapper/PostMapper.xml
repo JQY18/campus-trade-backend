@@ -42,6 +42,11 @@
                content,
                create_time
         from post
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>    
         order by create_time desc
     </select>
 

@@ -35,7 +35,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(LoginDTO loginDTO) {
-        userMapper.addUser(loginDTO);
+        try {
+            userMapper.addUser(loginDTO);
+        } catch(Exception e) {
+            throw new RuntimeException("用户名已存在");
+        }
     }
 
     @Override
@@ -59,7 +63,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updatePassword(Integer id, String currentPassword, String newPassword) {
         int update = userMapper.updatePassword(id, currentPassword, newPassword);
-        if(update == 0){
+        if (update == 0) {
             throw new RuntimeException("密码错误");
         }
     }
@@ -81,7 +85,7 @@ public class UserServiceImpl implements UserService {
             Files.write(path, avatar.getBytes());
 
             // 收集该帖子id对应的图片的静态资源映射地址
-            return "http://localhost:8080/image/"+newFileName;
+            return "http://localhost:8080/image/" + newFileName;
 
         } catch (IOException e) {
             throw new RuntimeException("Failed to save file", e);

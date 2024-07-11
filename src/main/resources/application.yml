@@ -28,7 +28,7 @@ mybatis:
   configuration:
     #驼峰命名自动映射
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 trade:
   jwt:

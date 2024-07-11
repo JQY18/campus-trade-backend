@@ -45,8 +45,8 @@ public class PostController {
      * @return
      */
     @GetMapping("/all")
-    public Result<List<PostVO>> getPosts() {
-        List<PostVO> list = postService.getAllPosts();
+    public Result<List<PostVO>> getPosts(Integer userId) {
+        List<PostVO> list = postService.getAllPosts(userId);
         return Result.success(list);
     }
 

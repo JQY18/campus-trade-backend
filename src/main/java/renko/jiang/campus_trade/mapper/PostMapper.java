@@ -14,7 +14,7 @@ import java.util.List;
 public interface PostMapper {
     PostVO getById(Integer id);
 
-    List<PostVO> getAllPosts();
+    List<PostVO> getAllPosts(Integer userId);
 
     @Select("select url from images where post_id = #{id}")
     List<String> getImagesByPostId(Integer id);

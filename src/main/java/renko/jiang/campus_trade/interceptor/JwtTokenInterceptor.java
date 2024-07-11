@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -32,8 +33,14 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
         }
 
         //1、从请求头中获取令牌
-        String token = request.getHeader(jwtProperties.getUserTokenName());
-        System.out.println("token" + token);
+        String token = request.getHeader("Authorization");
+
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+            // 验证和使用token...
+        }
+
+        // System.out.println("token: " + token);
         //2、校验令牌
         try {
             //解析jwt令牌

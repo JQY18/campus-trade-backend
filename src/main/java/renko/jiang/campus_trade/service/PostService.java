@@ -9,7 +9,7 @@ import java.util.List;
 public interface PostService {
     PostVO getPostById(Integer id);
 
-    List<PostVO> getAllPosts();
+    List<PostVO> getAllPosts(Integer userId);
 
     void addImages(Integer postId, List<String> url);
 

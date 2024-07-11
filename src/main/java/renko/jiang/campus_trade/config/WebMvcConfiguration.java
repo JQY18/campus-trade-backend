@@ -28,11 +28,12 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtTokenAdminInterceptor)
-                .addPathPatterns("/user/**")
+                .addPathPatterns("/**")
                 .excludePathPatterns("/user/login")
-                .excludePathPatterns("/user/**")
+                .excludePathPatterns("/user/register");
+                /*.excludePathPatterns("/user/**")
                 .excludePathPatterns("/comments/**")
-                .excludePathPatterns("/post/**");
+                .excludePathPatterns("/post/**");*/
     }
 
     @Value("${upload.path}")

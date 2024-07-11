@@ -48,9 +48,8 @@ public class PostServiceImpl implements PostService {
      * @return
      */
     @Override
-    public List<PostVO> getAllPosts() {
-        List<PostVO> postVOS = postMapper.getAllPosts();
-        System.out.println(postVOS.get(0));
+    public List<PostVO> getAllPosts(Integer userId) {
+        List<PostVO> postVOS = postMapper.getAllPosts(userId);
         return postVOS;
     }
 
