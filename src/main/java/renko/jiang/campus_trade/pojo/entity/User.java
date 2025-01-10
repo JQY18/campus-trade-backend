@@ -3,6 +3,7 @@ package renko.jiang.campus_trade.pojo.entity;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -12,6 +13,8 @@ import java.util.Date;
 public class User implements Serializable {
 
     private Integer id;
+
+    private Integer age;
 
     private String username;
 
@@ -27,7 +30,7 @@ public class User implements Serializable {
 
     private String email;
 
-    private Date createTime;
+    private LocalDateTime createTime;
 
-    private Date updateTime;
+    private LocalDateTime updateTime;
 }

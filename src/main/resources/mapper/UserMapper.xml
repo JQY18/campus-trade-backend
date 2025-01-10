@@ -22,6 +22,8 @@
         <set>
             <if test="username != null and username != ''">username = #{username},</if>
             <if test="nickname != null and nickname != ''">nickname = #{nickname},</if>
+            <if test="gender != null and gender != ''">gender = #{gender},</if>
+            <if test="age != null and age != ''">age = #{age},</if>
             <if test="school != null and school != ''">school = #{school},</if>
         </set>
         where id = #{id};

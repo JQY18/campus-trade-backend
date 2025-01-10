@@ -57,7 +57,10 @@ public class UserController {
 
         request.getSession().setAttribute("userId", user.getId());
 
-        System.out.println("userId: " + user.getId());
+        System.out.println("登录userId: " + user.getId());
+        System.out.println("登录名：" + user.getUsername());
+
+
         return Result.success(userLoginVO);
     }
 
@@ -80,6 +83,7 @@ public class UserController {
     @GetMapping("/authentic")
     public Result<Integer> getAuthentic(HttpServletRequest request) {
         Integer userId = (Integer) request.getSession().getAttribute("userId");
+        //System.out.println("userId: " + userId);
         if (userId == null) {
             return Result.error("用户未登录");
         }

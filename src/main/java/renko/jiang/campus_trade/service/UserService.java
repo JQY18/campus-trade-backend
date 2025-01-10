@@ -17,4 +17,6 @@ public interface UserService {
     void updateAvatar(Integer id, MultipartFile avatar);
 
     void updatePassword(Integer id, String currentPassword, String newPassword);
+
+    void deleteUser(Integer id);
 }

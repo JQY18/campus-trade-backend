@@ -1,5 +1,6 @@
 package renko.jiang.campus_trade.mapper;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -24,7 +25,7 @@ public interface UserMapper {
     //修改用户信息
     void updateUser(User user);
 
-    @Select("select id,username,nickname,avatar,school from user where id = #{userId}")
+    @Select("select id,username,gender,age,nickname,avatar,school from user where id = #{userId}")
     UserInfoVO getUserInfoById(Integer userId);
 
     // 修改用户信息
@@ -35,4 +36,7 @@ public interface UserMapper {
 
     @Update("update user set password = #{newPassword} where id = #{id} and password = #{currentPassword}")
     int updatePassword(Integer id, String currentPassword, String newPassword);
+
+    @Delete("delete from user where id = #{id}")
+    void deleteUser(Integer id);
 }

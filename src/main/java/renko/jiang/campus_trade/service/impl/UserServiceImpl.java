@@ -68,6 +68,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public void deleteUser(Integer id) {
+        userMapper.deleteUser(id);
+    }
+
     //处理图片上传并且返回图片的静态资源映射地址
     public String handleSingleFileUpload(MultipartFile avatar) {
         try {
